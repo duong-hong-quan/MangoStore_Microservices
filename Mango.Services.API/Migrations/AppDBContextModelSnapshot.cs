@@ -40,9 +40,7 @@ namespace Mango.Services.CouponAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CounponId");
-
                     b.ToTable("Coupons");
-
                     b.HasData(
                         new
                         {
@@ -59,7 +57,6 @@ namespace Mango.Services.CouponAPI.Migrations
                             MinAmount = 40
                         });
                 });
-#pragma warning restore 612, 618
         }
     }
 }
