@@ -41,7 +41,8 @@ namespace Mango.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("CustomerError", responeDto.Message);
+                TempData["Error"] = responeDto.Message;
+
                 return View(obj);
             }
 
@@ -76,6 +77,11 @@ namespace Mango.Web.Controllers
                     TempData["Success"] = "Registration Successful";
                     return RedirectToAction(nameof(Login));
                 }
+            }
+            else
+            {
+                TempData["Error"] = result.Message;
+
             }
 
             var roleList = new List<SelectListItem>()
