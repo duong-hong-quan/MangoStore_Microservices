@@ -62,9 +62,6 @@ namespace Mango.Web.Controllers
 
                 }
 
-
-                
-
             };
             CartDetailsDto cartDetails = new CartDetailsDto()
             {

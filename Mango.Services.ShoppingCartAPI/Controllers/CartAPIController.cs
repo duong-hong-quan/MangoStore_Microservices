@@ -38,7 +38,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
         {
             try
             {
-                var cartHeaderFromDb = await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == cartDto.CartHeader.UserId);
+                var cartHeaderFromDb = await _db.CartHeaders.AsNoTracking().FirstOrDefaultAsync(u => u.UserId == cartDto.CartHeader.UserId);
                 if (cartHeaderFromDb == null)
                 {
                     CartHeader cartHeader = _mapper.Map<CartHeader>(cartDto.CartHeader);
@@ -50,7 +50,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                 }
                 else
                 {
-                    var cartDetailsFromDb = await _db.CartDetails.FirstOrDefaultAsync(u => u.ProductId == cartDto.CartDetails.First().ProductId && u.CartHeaderId == cartHeaderFromDb.CartHeaderId);
+                    var cartDetailsFromDb = await _db.CartDetails.AsNoTracking().FirstOrDefaultAsync(u => u.ProductId == cartDto.CartDetails.First().ProductId && u.CartHeaderId == cartHeaderFromDb.CartHeaderId);
                     if (cartDetailsFromDb == null)
                     {
                         cartDto.CartDetails.First().CartHeaderId = cartHeaderFromDb.CartHeaderId;
