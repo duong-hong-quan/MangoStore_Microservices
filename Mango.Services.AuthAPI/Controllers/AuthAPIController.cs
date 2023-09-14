@@ -1,4 +1,5 @@
-﻿using Mango.Services.AuthAPI.Models.Dto;
+﻿using Mango.MessageBus;
+using Mango.Services.AuthAPI.Models.Dto;
 using Mango.Services.AuthAPI.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,38 +11,42 @@ namespace Mango.Services.AuthAPI.Controllers
     public class AuthAPIController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
         private ResponeDto _respone;
 
-        public AuthAPIController(IAuthService authService)
+        public AuthAPIController(IAuthService authService, IMessageBus messageBus, IConfiguration configuration)
         {
             _authService = authService;
             _respone = new ResponeDto();
+            _messageBus = messageBus;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
         {
             var errorMessage = await _authService.Register(model);
-            if(!string.IsNullOrEmpty(errorMessage))
+            if (!string.IsNullOrEmpty(errorMessage))
             {
                 _respone.IsSuccess = false;
                 _respone.Message = errorMessage;
                 return BadRequest(_respone);
             }
-            
+            await _messageBus.PublishMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:registeruser"));
             return Ok(_respone);
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto model)
         {
             var loginRespone = await _authService.Login(model);
-            if(loginRespone.User == null)
+            if (loginRespone.User == null)
             {
                 _respone.IsSuccess = false;
                 _respone.Message = "Username or password is incorrect";
                 return BadRequest(_respone);
             }
-           _respone.Result = loginRespone;  
+            _respone.Result = loginRespone;
             return Ok(_respone);
         }
         [HttpPost("AssignRole")]
