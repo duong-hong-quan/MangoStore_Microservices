@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mango.Services.OrderAPI.Models.Dto
+namespace Mango.Web.Models
 {
     public class OrderHeaderDto
     {
@@ -15,8 +15,8 @@ namespace Mango.Services.OrderAPI.Models.Dto
         public string? Email { get; set; }
         public DateTime OrderTime { get; set; } 
         public string? Status { get; set; }
-        public string? PaymentIntentId {  get; set; }    
-        public string? StripeSessionId { get; set; } 
+        public string? PaymentIntentId { get; set; }
+        public string? StripeSessionId { get; set; }
         public IEnumerable<OrderDetailsDto> OrderDetails { get; set; } 
     }
 }
