@@ -33,7 +33,7 @@ namespace Mango.Services.AuthAPI.Controllers
                 _respone.Message = errorMessage;
                 return BadRequest(_respone);
             }
-            await _messageBus.PublishMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:registeruser"));
+            await _messageBus.PublishMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
             return Ok(_respone);
         }
         [HttpPost("login")]

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using Stripe;
+using Mango.MessageBus;
 
 namespace Mango.Services.OrderAPI.Controllers
 {
@@ -20,13 +21,16 @@ namespace Mango.Services.OrderAPI.Controllers
         private IMapper _mapper;
         private readonly AppDBContext _db;
         private IProductService _productService;
-
-        public OrderAPIController(IMapper mapper, AppDBContext db, IProductService productService)
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
+        public OrderAPIController(IMapper mapper, AppDBContext db, IProductService productService, IMessageBus messageBus, IConfiguration configuration)
         {
             _respone = new ResponeDto();
             _mapper = mapper;
             _db = db;
             _productService = productService;
+            _messageBus = messageBus;
+            _configuration = configuration;
         }
         [Authorize]
         [HttpPost("CreateOrder")]
@@ -134,6 +138,15 @@ namespace Mango.Services.OrderAPI.Controllers
                     orderHeader.Status = SD.Status_Approved;
                     _db.SaveChanges();
                 }
+                RewardsDto rewardsDto = new()
+                {
+                    OrderId = orderHeader.OrderHeaderId,
+                    RewardsActivity = Convert.ToInt32(orderHeader.OrderTotal),
+                    UserId = orderHeader.UserId
+                };
+
+                string topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
+                await _messageBus.PublishMessage(rewardsDto, topicName);
                 _respone.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
 
             }
@@ -142,7 +155,7 @@ namespace Mango.Services.OrderAPI.Controllers
                 _respone.Message = ex.Message;
                 _respone.IsSuccess = false;
             }
-
+            
 
 
 
