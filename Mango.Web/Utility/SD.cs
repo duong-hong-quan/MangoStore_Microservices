@@ -27,5 +27,12 @@
         public const string Status_Completed = "Completed";
         public const string Status_Refunded = "Refunded";
         public const string Stauts_Cancelled = "Cancelled";
+  
+        public enum ContentType
+        {
+            Json,
+            MultipartFormData
+        }
+    
     }
 }
