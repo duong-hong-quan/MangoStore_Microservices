@@ -7,7 +7,7 @@
     <input asp-for="CartHeader.CouponCode" hidden />
     <input asp-for="CartHeader.Discount" hidden />
     <input asp-for="CartHeader.CartTotal" hidden />
-    
+
     <div class="border mt-2 p-4 rounded">
         <div class="container row">
             <div class="col-md-7 col-12">
@@ -20,9 +20,9 @@
                 <div class="row pt-2">
                     <div class="col-12 py-2">
                         <input asp-for="CartHeader.Name" placeholder="first name..." class="form-control" />
-                 <span asp-validation-for="CartHeader.Name"></span>
+                        <span asp-validation-for="CartHeader.Name"></span>
                     </div>
-                    
+
                     <div class="col-12 py-2">
                         <input asp-for="CartHeader.Email" placeholder="email..." class="form-control" />
                         <span asp-validation-for="CartHeader.Email"></span>
@@ -57,8 +57,8 @@
                             </div>
                         </div>
                         <hr />
-                      
-                              @foreach(var cartObj in Model.CartDetails)
+
+                        @foreach (var cartObj in Model.CartDetails)
                         {
                             <div class="row h-100">
                                 <div class="col-6">
@@ -75,16 +75,16 @@
                             </div>
                             <hr />
                         }
-                        
-                      
-                      
+
+
+
 
                         <div class="row">
                             <div class="col-12 text-center pr-4 text-danger">
                                 Order Total : @Model.CartHeader.CartTotal.ToString()  $$ <br />
-                                @if(Model.CartHeader.Discount > 0)
+                                @if (Model.CartHeader.Discount > 0)
                                 {
-                                    
+
                                     <span class="text-success"> Order Discount : @Model.CartHeader.Discount.ToString()  $$</span>
                                 }
                             </div>
