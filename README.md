@@ -1,7 +1,6 @@
 # Mango Store Build With Microservices Architecture
-## Project Description
-### Your microservices project consists of several interconnected services. These services collaborate to create a robust system that handles various aspects of your application. Here are the key components:
 
+### Core Services
 1. Product Service: Responsible for managing product-related information, such as product details, inventory, and pricing.
 2. Order Service: Handles order processing, including order creation, payment verification, and order fulfillment.
 3. Cart Service: Manages user shopping carts, allowing users to add, remove, and modify items in their carts.
