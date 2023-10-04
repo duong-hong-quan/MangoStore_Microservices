@@ -10,6 +10,7 @@ using Mango.MessageBus;
 using Mango.Services.OrderAPI.Service.IService;
 using Stripe;
 using Mango.Services.OrderAPI.Service;
+using Mango.Services.OrderAPI.RabbitMQSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackEndApiAuthenticationHttpClientHandler>();
 builder.Services.AddScoped<IProductService, Mango.Services.OrderAPI.Service.ProductService>();
-builder.Services.AddScoped<IMessageBus, MessageBus>();
+builder.Services.AddScoped<IRabbitMQOrderMessageSender, RabbitMQOrderMessageSender>();
 builder.Services.AddHttpClient("Product",
 u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"])).AddHttpMessageHandler<BackEndApiAuthenticationHttpClientHandler>();
 
