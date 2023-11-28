@@ -1,5 +1,5 @@
 # Mango Store Build With Microservices Architecture
-
+[![Mango Store - Microservices Repo Using .NET & CI (GitHub Actions) | ©2023.HongQuan](https://github.com/duong-hong-quan/mangostore_microservices/actions/workflows/dotnet.yml/badge.svg)](https://github.com/duong-hong-quan/mangostore_microservices/actions/workflows/dotnet.yml)
 ### Core Services
 1. Product Service: Responsible for managing product-related information, such as product details, inventory, and pricing.
 2. Order Service: Handles order processing, including order creation, payment verification, and order fulfillment.
